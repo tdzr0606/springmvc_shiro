@@ -3,6 +3,7 @@ package com.wbkj.jet.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,9 +29,10 @@ public class IndexController
     @RequestMapping(value = "/login")
     public String login()
     {
-        System.out.println(request.getSession().getAttribute("user"));
+        System.out.println("login:"+request.getSession().getAttribute("user"));
         return "test_jsp";
     }
+
 
     @RequestMapping(value = "/logout")
     public String logout()
@@ -40,29 +42,11 @@ public class IndexController
     }
 
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/webAdmin/test")
     public String testPage()
     {
+        System.out.println("test:"+request.getSession().getAttribute("user"));
         return "test_jsp";
     }
 
-
-    @RequestMapping(value = "/unauthor")
-    public String unauthorPage()
-    {
-        return "unauthor_jsp";
-    }
-
-
-    @RequestMapping(value = "/fail")
-    public String failPage()
-    {
-        return "fail_jsp";
-    }
-
-    @RequestMapping(value = "/cas")
-    public void cas()
-    {
-        System.out.println("cas");
-    }
 }

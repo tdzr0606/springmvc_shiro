@@ -20,14 +20,15 @@
                   value="http://cas.smeyn.cn:8899/sso/login?service=http://localhost:8080/shiro-cas"/>
 
         <!-- 登录成功后要跳转的连接 -->
-        <property name="successUrl" value="/test"/>
+        <property name="successUrl" value="/webAdmin/test"/>
         <!-- 未验证的路径 -->
-        <property name="unauthorizedUrl" value="/unauthor"/>
+        <property name="unauthorizedUrl" value="/"/>
 
         <!-- 过滤配置 -->
         <property name="filters">
             <map>
                 <entry key="casFilter" value-ref="casFilter"/>
+                <entry key="logoutFilter" value-ref="logoutFilter"/>
             </map>
         </property>
 
@@ -37,23 +38,23 @@
             <value>
                 / = anon
                 /login = authc
+                /webAdmin/** = authc
+                /logout = logoutFilter
                 /shiro-cas = casFilter
-                /fail = anon
             </value>
         </property>
     </bean>
 
 
     <bean id="casFilter" class="org.apache.shiro.cas.CasFilter">
-        <property name="failureUrl" value="/fail"/>
-        <property name="successUrl" value="/test"/>
+        <property name="failureUrl" value="/webAdmin/test"/>
+        <property name="successUrl" value="/webAdmin/test"/>
     </bean>
 
-
-    <!--<bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">-->
-        <!--<property name="redirectUrl"-->
-                  <!--value="http://cas.smeyn.cn:8899/sso/logout?service=http://localhost:8080/shiro-cas" />-->
-    <!--</bean>-->
+    <!-- 退出登录 保证每次登录 都需要 做 单点统一认证 -->
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="/" />
+    </bean>
 
 
     <bean id="casRealm" class="com.wbkj.jet.realm.MyCasRealm">

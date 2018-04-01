@@ -11,7 +11,6 @@
 </head>
 <body>
 index
-<form action="/login" method="post">
-</form>
+<a href="/login">login</a>
 </body>
 </html>
